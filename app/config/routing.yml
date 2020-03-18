@@ -1,3 +1,7 @@
+sport_radar_calendar:
+    resource: "@SportRadarCalendarBundle/Resources/config/routing.xml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
