@@ -2,11 +2,15 @@
 
 namespace SportRadar\CalendarBundle\Controller;
 
-use SportRadar\CalendarBundle\Entity\Sport;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use SportRadar\CalendarBundle\Entity\Sport;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use SportRadar\CalendarBundle\Form\Type\SportType;
+use FOS\RestBundle\View\View; 
 
 /**
  * Sport controller.
@@ -15,123 +19,49 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SportController extends Controller
 {
-    /**
-     * Lists all sport entities.
-     *
-     * @Route("/", name="sport_index")
-     * @Method("GET")
+    
+
+     /**
+     * @Rest\View()
+     * @Rest\Get("/sports")
      */
-    public function indexAction()
+    public function getSportsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sports = $em->getRepository('SportRadarCalendarBundle:Sport')->findAll();
-
-        return $this->render('sport/index.html.twig', array(
-            'sports' => $sports,
-        ));
+       
+       
+        $sports = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('SportRadarCalendarBundle:Sport')
+                ->findAll();
+        return $sports;
     }
-
     /**
-     * Creates a new sport entity.
-     *
-     * @Route("/new", name="sport_new")
-     * @Method({"GET", "POST"})
+     * 
+     * @Rest\View()
+     * @Rest\Post("/new", name="sport_new")
      */
-    public function newAction(Request $request)
+    public function postSportAction(Request $request)
     {
         $sport = new Sport();
-        $form = $this->createForm('SportRadar\CalendarBundle\Form\SportType', $sport);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(SportType::class, $sport);
+        
+        $form->submit($request->request->all());
+        if ($form->isValid()) {
+            
+            $em = $this->get('doctrine.orm.entity_manager');
+            
             $em->persist($sport);
+
             $em->flush();
-
-            return $this->redirectToRoute('sport_show', array('id' => $sport->getId()));
+            
+            return  $sport;
+        } else {
+            return $form;
         }
-
-        return $this->render('sport/new.html.twig', array(
-            'sport' => $sport,
-            'form' => $form->createView(),
-        ));
     }
 
-    /**
-     * Finds and displays a sport entity.
-     *
-     * @Route("/{id}", name="sport_show")
-     * @Method("GET")
-     */
-    public function showAction(Sport $sport)
-    {
-        $deleteForm = $this->createDeleteForm($sport);
+    
 
-        return $this->render('sport/show.html.twig', array(
-            'sport' => $sport,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing sport entity.
-     *
-     * @Route("/{id}/edit", name="sport_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Sport $sport)
-    {
-        $deleteForm = $this->createDeleteForm($sport);
-        $editForm = $this->createForm('SportRadar\CalendarBundle\Form\SportType', $sport);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('sport_edit', array('id' => $sport->getId()));
-        }
-
-        return $this->render('sport/edit.html.twig', array(
-            'sport' => $sport,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a sport entity.
-     *
-     * @Route("/{id}", name="sport_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Sport $sport)
-    {
-        $form = $this->createDeleteForm($sport);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($sport);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('sport_index');
-    }
-
-    /**
-     * Creates a form to delete a sport entity.
-     *
-     * @param Sport $sport The sport entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Sport $sport)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('sport_delete', array('id' => $sport->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+    
 }
