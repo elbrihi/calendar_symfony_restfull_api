@@ -1,66 +1,63 @@
 <?php
 
-namespace SportRadar\CalendarBundle\Controller;
+namespace SportRadar\CalendarBundle\Controller\Sport;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use SportRadar\CalendarBundle\Entity\Sport;
+use SportRadar\CalendarBundle\Entity\Event;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use SportRadar\CalendarBundle\Form\Type\SportType;
+use SportRadar\CalendarBundle\Form\Type\EventType;
 use FOS\RestBundle\View\View; 
 
 /**
  * Sport controller.
  *
- * @Route("sport")
+ * @Route("event")
  */
-class SportController extends Controller
-{
-    
 
-    /**
+class EventController extends Controller 
+
+{
+     /**
      * 
      * @Rest\View()
-     * @Rest\Get("/sports")
+     * @Rest\Get("/events")
      */
-    public function getSportsAction(Request $request)
+    public function getEventsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sports = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('SportRadarCalendarBundle:Sport')
+        $events = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('SportRadarCalendarBundle:Event')
                 ->findAll();
-        return $sports;
+        return $events;
     }
     /**
      * 
      * @Rest\View()
-     * @Rest\Post("/new", name="sport_new")
+     * @Rest\Post("/new", name="event_new")
      */
-    public function postSportAction(Request $request)
+    public function postEventAction(Request $request)
     {
-        $sport = new Sport();
-        $form = $this->createForm(SportType::class, $sport);
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
         
         $form->submit($request->request->all());
         if ($form->isValid()) {
             
             $em = $this->get('doctrine.orm.entity_manager');
             
-            $em->persist($sport);
+            $em->persist($event);
 
             $em->flush();
             
-            return  $sport;
+            return  $event;
         } else {
             return $form;
         }
     }
 
-    
-
-    
 }

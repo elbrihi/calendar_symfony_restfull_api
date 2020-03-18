@@ -1,7 +1,12 @@
+
 sport_radar_calendar_sport:
     resource: "@SportRadarCalendarBundle/Controller/SportController.php"
     type:     annotation
 
+sport_radar_calendar_event:
+    resource: "@SportRadarCalendarBundle/Controller/Sport/EventController.php"
+    type:     annotation
+    
 sport_radar_calendar:
     resource: "@SportRadarCalendarBundle/Resources/config/routing.xml"
     prefix:   /calendar/

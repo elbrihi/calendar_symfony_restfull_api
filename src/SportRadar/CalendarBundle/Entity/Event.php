@@ -24,10 +24,16 @@ class Event
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="date", type="string", length=255)
      */
-    private $title;
+    private $date;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
 
     /**
      * Get id
@@ -46,21 +52,44 @@ class Event
      *
      * @return Event
      */
-    public function setTitle($title)
+    public function setDate($date)
     {
-        $this->title = $title;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get date
      *
      * @return string
      */
-    public function getTitle()
+    public function getDate()
     {
-        return $this->title;
+        return $this->date;
+    }
+     /**
+     * Set city
+     *
+     * @param string city
+     *
+     * @return Event
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
 
