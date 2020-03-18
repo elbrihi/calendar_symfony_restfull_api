@@ -8,6 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('SportRadarCalendarBundle:Default:index.html.twig');
+        return $this->render('SportRadarCalendarBundle:Default:index.html.twig');   
+
     }
 }

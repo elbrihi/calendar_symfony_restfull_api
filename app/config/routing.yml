@@ -1,6 +1,6 @@
 sport_radar_calendar:
     resource: "@SportRadarCalendarBundle/Resources/config/routing.xml"
-    prefix:   /
+    prefix:   /calendar/
 
 app:
     resource: '@AppBundle/Controller/'
