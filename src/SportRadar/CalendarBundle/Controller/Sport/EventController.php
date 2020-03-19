@@ -70,9 +70,9 @@ class EventController extends Controller
             return $form;
         }
     }
-        /**
+     /**
      * 
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"event"})
      * @Rest\Get("/sport/{id}/events", name="event_new")
      */
     public function getEventAction(Request $request)

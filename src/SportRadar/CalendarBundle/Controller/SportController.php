@@ -23,7 +23,7 @@ class SportController extends Controller
 
     /**
      * 
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"sport"})
      * @Rest\Get("/sports")
      */
     public function getSportsAction(Request $request)

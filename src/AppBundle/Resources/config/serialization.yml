@@ -1,0 +1,18 @@
+# src/AppBundle/Resources/config/serialization.yml
+SportRadar\CalendarBundle\Entity\Sport:
+    attributes:
+        id:
+            groups: ['sport']
+        title:
+            groups: ['sport']
+        events:
+            groups: ['sport']
+SportRadar\CalendarBundle\Entity\Event:
+    attributes:
+        id:
+            groups: ['event','sport']
+        date:
+            groups: ['event','sport']
+        city:
+            groups: ['event','sport']
+        
