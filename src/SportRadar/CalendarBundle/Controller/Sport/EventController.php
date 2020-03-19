@@ -44,18 +44,21 @@ class EventController extends Controller
     public function postEventAction(Request $request)
     {
         $sport = $this->get('doctrine.orm.entity_manager')
-        ->getRepository('SportRadarCalendarBundle:Event')
+        ->getRepository('SportRadarCalendarBundle:Sport')
         ->find($request->get('id'));
 
         if (empty($sport)) {
-            return $this->placeNotFound();
+            return $this->sportNotFound();
         }
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         
+        
         $form->submit($request->request->all());
+        
         if ($form->isValid()) {
-            
+            $event->setSport($sport);
+           
             $em = $this->get('doctrine.orm.entity_manager');
             
             $em->persist($event);
@@ -67,8 +70,27 @@ class EventController extends Controller
             return $form;
         }
     }
+        /**
+     * 
+     * @Rest\View()
+     * @Rest\Get("/sport/{id}/events", name="event_new")
+     */
+    public function getEventAction(Request $request)
+    {
+        $sport = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('SportRadarCalendarBundle:Sport')
+                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
+        /* @var $place Place */
 
-    private function placeNotFound()
+        if (empty($sport)) {
+            return $this->sportNotFound();
+        }
+
+        return $sport;
+    }
+
+    
+    private function sportNotFound()
     {
         return \FOS\RestBundle\View\View::create(['message' => 'Sport not found'], Response::HTTP_NOT_FOUND);
     }

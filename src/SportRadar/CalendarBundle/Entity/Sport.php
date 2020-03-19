@@ -4,6 +4,8 @@ namespace SportRadar\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Sport
  *
@@ -28,7 +30,11 @@ class Sport
      */
     private $title;
 
-
+     /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="sport") //  it means that Pice is the subgroupe of Place
+     * @var Sport
+     */
+    private $events;
     /**
      * Get id
      *
@@ -39,6 +45,10 @@ class Sport
         return $this->id;
     }
 
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
     /**
      * Set title
      *
@@ -62,5 +72,21 @@ class Sport
     {
         return $this->title;
     }
+
+    
+    public function setEvents($events)
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    
 }
 

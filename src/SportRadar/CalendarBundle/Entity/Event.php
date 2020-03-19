@@ -35,16 +35,13 @@ class Event
      */
     private $city;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-
-     /**
-      * 
-      */
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="events") //  it means that Pice is the subgroupe of Place
+     * @var Sport
+     */
+    protected $sport;
+
     public function getId()
     {
         return $this->id;
@@ -95,6 +92,20 @@ class Event
     public function getCity()
     {
         return $this->city;
+    }
+
+     
+    public function setSport($sport)
+    {
+        $this->sport = $sport;
+
+        return $this;
+    }
+
+    
+    public function getSport()
+    {
+        return $this->sport;
     }
 }
 
