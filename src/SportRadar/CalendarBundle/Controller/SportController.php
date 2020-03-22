@@ -29,12 +29,8 @@ class SportController extends Controller
      */
     public function getSportsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $sports = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('SportRadarCalendarBundle:Sport')
-                ->findAll();
-        return $sports;
+        return $this->get('sport_radar_calendar.sport_manager')->getAllSports();
+       
     }
     /**
      * 

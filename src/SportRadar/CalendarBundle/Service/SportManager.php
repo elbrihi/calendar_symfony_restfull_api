@@ -39,4 +39,14 @@ class SportManager
             return $form;
         }
     }
+
+    public function getAllSports()
+    {
+       
+
+        $sports = $this->em
+                ->getRepository('SportRadarCalendarBundle:Sport')
+                ->findAll();
+        return $sports;
+    }
 }
