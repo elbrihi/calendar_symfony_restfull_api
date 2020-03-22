@@ -2,11 +2,11 @@
 SportRadar\CalendarBundle\Entity\Sport:
     attributes:
         id:
-            groups: ['sport']
+            groups: ['sport','event']
         title:
-            groups: ['sport']
+            groups: ['sport','event']
         events:
-            groups: ['sport']
+            groups: ['sport','event']
 SportRadar\CalendarBundle\Entity\Event:
     attributes:
         id:
