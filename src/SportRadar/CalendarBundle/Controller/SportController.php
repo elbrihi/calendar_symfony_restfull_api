@@ -48,7 +48,7 @@ class SportController extends Controller
         
         $form->submit($request->request->all());
         if ($form->isValid()) {
-            
+            //return $sport;
             $em = $this->get('doctrine.orm.entity_manager');
             
             $em->persist($sport);

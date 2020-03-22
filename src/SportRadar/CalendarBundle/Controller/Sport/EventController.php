@@ -60,8 +60,7 @@ class EventController extends Controller
         $form->submit($request->request->all());
         
         $event->setSport($sport);
-       
-        
+      
         $date = $event->getDate();
 
         $event->setDate($this->get('sport_radar_calendar.date')->dateToString($date));

@@ -56,34 +56,52 @@ bootstrap.min.css'>
         eventLimit: true // allow "more" link when too many events
 
     });
-    
+     
+      $("#event_save").click(function(){
+          var city =  $("#event_city").val();
+          var id =  $("#event_sport").val();
+          var date = $("#event_date").val();
+          //et id = $(this).attr('id');
+          let url = '{{ path('event_new', {'id' : 'id' }) }}';
+          url  = url .replace("id", id);
+          console.log(url);
 
-   
-        $("#event_save").click(function(){
-            var city =  $("#event_city").val();
-            var id =  $("#event_sport").val();
-            var date = $("#event_date").val();
-            //et id = $(this).attr('id');
-            let url = '{{ path('event_new', {'id' : 'id' }) }}';
-            url  = url .replace("id", id);
-            console.log(url);
+          $.ajax({
+              
+              url: url,
+              method: "POST",
+              data: {city:city, date:date},
+              success:function(data)
+              {
+                  console.log(data);
+              },
+              error: function(error){
+                console.log("Something went wrong", error);
+              }
+          });
 
-            $.ajax({
-                
-                url: url,
-			        	method: "POST",
-                data: {city:city, date:date},
-                success:function(data)
-                {
-                    console.log(data);
-                },
-                error: function(error){
-                  console.log("Something went wrong", error);
-                }
-            });
+          
+      });
 
-            
-        });
+      $("#sport").click(function(){
+
+          title = $("#sport_title").val();
+          let url = '{{ path('sport_new') }}';
+          $.ajax({
+            url:url,
+            method:"POST",
+            data: {title:title},
+            success:function(data)
+              {
+                  console.log(data);
+              },
+              error: function(error){
+                console.log("Something went wrong", error);
+              }
+          });
+      });
+
+      
   });
 
 </script>
@@ -110,30 +128,92 @@ bootstrap.min.css'>
 </head>
 {% block body %}
 
-  <div id='calendar'></div>
-   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Creat Event</h4>
-        </div>
-
-        <div class="modal-body">
-          {{ form_start(form) }}
-              {{ form_row(form.date, { 'value': '2020-03-12 00:00:00' }) }} 
-              {{ form_row(form.city) }}
-              {{ form_row(form.sport) }} 
-              <button type="button" id="event_save" class="save">Save</button> 
-          {{ form_end(form) }}
-        </div>
-   
+  <!--div id='calendar'></div-->
+<!-- Begin container -->
+<div class="container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mySport">
+            Create new Sport Categorie
+        </button>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    </div> 
+    <div class="row">
+      <div class="col-md-6">
+        <div id='calendar'></div>
       </div>
-      
+    </div> 
+  </div>
+  
+</div>
+<!-- End container -->
+<!-- Begin End -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Creat Event</h4>
+      </div>
+
+      <div class="modal-body">
+        {{ form_start(event_form) }}
+            {{ form_row(event_form.date, { 'value': '2020-03-12 00:00:00' }) }} 
+            {{ form_row(event_form.city) }}
+            {{ form_row(event_form.sport) }} 
+            <button type="button" id="event_save" class="save">Save</button> 
+        {{ form_end(event_form) }}
+      </div>
+  
+    </div>
+    
+  </div>
+</div>
+<!-- End Event -->
+
+<!-- Begin End -->
+<!-- Begin Sport -->
+<div class="modal" id="mySport">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Creting Sport Category</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>Enter Sport catergory</label>
+              {{ form_start(sport_form) }}
+              {{ form_row(sport_form.title) }}
+              {{ form_start(sport_form) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success " id="sport" data-dismiss="modal">Create</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
     </div>
   </div>
+</div>
+<!-- End Sport -->
 
   
 
