@@ -43,22 +43,9 @@ class SportController extends Controller
      */
     public function postSportAction(Request $request)
     {
-        $sport = new Sport();
-        $form = $this->createForm(SportType::class, $sport);
-        
-        $form->submit($request->request->all());
-        if ($form->isValid()) {
-            //return $sport;
-            $em = $this->get('doctrine.orm.entity_manager');
-            
-            $em->persist($sport);
 
-            $em->flush();
-            
-            return  $sport;
-        } else {
-            return $form;
-        }
+        return $this->get('sport_radar_calendar.sport_manager')->saveSport($request);
+        
     }
 
     

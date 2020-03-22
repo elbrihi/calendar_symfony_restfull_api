@@ -13,6 +13,11 @@
         </service-->
         <service id="sport_radar_calendar.date" class="SportRadar\CalendarBundle\Service\Date">        
         </service>
+
+        <service id="sport_radar_calendar.sport_manager" class="SportRadar\CalendarBundle\Service\SportManager">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="form.factory"/>
+        </service>
     </services>
     
 </container>
