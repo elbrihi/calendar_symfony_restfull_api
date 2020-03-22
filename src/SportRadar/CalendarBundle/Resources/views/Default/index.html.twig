@@ -15,13 +15,14 @@ bootstrap.min.css'>
 
   $(document).ready(function() {
 
+     events();
     
       var id = 5;
     //console.log(id);
    
     //console.log(url);
     $("#myDialog").modal('show'); 
-
+    
     var calendar = $('#calendar').fullCalendar({
         
         editable:true,
@@ -30,7 +31,6 @@ bootstrap.min.css'>
         center:'title',
         right:'month,agendaWeek,agendaDay'
         },
-        //events:url,
         selectable:true,
         selectHelper:true,
         select: function(start, end, allDay)
@@ -93,7 +93,7 @@ bootstrap.min.css'>
             data: {title:title},
             success:function(data)
               {
-                  console.log(data);
+                  events()
               },
               error: function(error){
                 console.log("Something went wrong", error);
@@ -101,6 +101,31 @@ bootstrap.min.css'>
           });
       });
 
+     
+      
+
+      function events()
+      {
+          let url = '{{ path('sport_show') }}';
+          $.ajax({
+          url:url,
+          success:function(data)
+            {
+                for(i = 0; i< data.length; i++)
+                {
+                  //console.log(data[i].events);
+                  for(j=0;j<data[i].events.length;j++)
+                  {
+                  
+                    html = data[i].events[j]['date']+',  '+data[i]['title']+', '+data[i].events[j]['city'];
+                    $('#event_calandar').append('<li class="list-group-item event">'+html+'</li>')
+                  }
+                }
+            }
+         
+          });
+        }
+   
       
   });
 
@@ -146,6 +171,16 @@ bootstrap.min.css'>
     <div class="row">
       <div class="col-md-6">
         <div id='calendar'></div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Featured
+          </div>
+          <ul class="list-group list-group-flush">
+            <div id="event_calandar"></div>
+          </ul>
+        </div>
       </div>
     </div> 
   </div>
@@ -202,6 +237,8 @@ bootstrap.min.css'>
             </div>
           </div>
         </div>
+
+        
       </div>
 
       <!-- Modal footer -->

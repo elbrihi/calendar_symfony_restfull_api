@@ -24,8 +24,8 @@ class EventController extends Controller
 {
      /**
      * 
-     * @Rest\View()
-     * @Rest\Get("/events")
+     * @Rest\View(serializerGroups={"event"})
+     * @Rest\Get("/events", name="events")
      */
     public function getEventsAction(Request $request)
     {
@@ -38,7 +38,7 @@ class EventController extends Controller
     }
     /**
      * 
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"event"})
      * @Rest\Post("/sport/{id}/events", name="event_new")
      */
     
