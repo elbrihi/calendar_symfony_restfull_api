@@ -10,8 +10,14 @@ class SportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-       
+        $builder
+        ->add('title',TextType::class, array(
+                'attr'=>array(
+                    'class'=>'form-control',
+                )
+            )
+        )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

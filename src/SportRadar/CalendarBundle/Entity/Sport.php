@@ -86,7 +86,10 @@ class Sport
     {
         return $this->events;
     }
-
+    public function __toString()
+    {
+    return $this->getTitle();
+    }
     
 }
 

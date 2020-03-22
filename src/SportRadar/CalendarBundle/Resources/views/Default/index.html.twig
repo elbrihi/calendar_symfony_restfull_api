@@ -1,1 +1,141 @@
-Hello World!
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.css' rel='stylesheet' />
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/
+bootstrap.min.css'>
+<link href='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js'></script>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/jquery.min.js'></script>
+<script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min
+.js'></script>
+<script>
+
+  $(document).ready(function() {
+
+    
+      var id = 5;
+    //console.log(id);
+   
+    //console.log(url);
+    $("#myDialog").modal('show'); 
+
+    var calendar = $('#calendar').fullCalendar({
+        
+        editable:true,
+        header:{
+        left:'prev,next today',
+        center:'title',
+        right:'month,agendaWeek,agendaDay'
+        },
+        //events:url,
+        selectable:true,
+        selectHelper:true,
+        select: function(start, end, allDay)
+        {
+            
+            $("#myModal").modal('show');
+            var start = $.fullCalendar.formatDate(start, "DD.MM.YYYY hh:mm");
+            
+            $('.modal').find('#event_date').val(start);
+            $("#event_city").change(function(){
+              $('.modal').find('#event_city').val($('#event_city').val());
+            });
+            $("#event_sport").change(function(){
+              $('.modal').find('#event_sport').val($('#event_sport').val());
+            });
+             
+        },
+        eventClick: function(event, element) {
+                console.log(4587);
+                
+        },
+        editable: true,
+        eventLimit: true // allow "more" link when too many events
+
+    });
+    
+
+   
+        $("#event_save").click(function(){
+            var city =  $("#event_city").val();
+            var id =  $("#event_sport").val();
+            var date = $("#event_date").val();
+            //et id = $(this).attr('id');
+            let url = '{{ path('event_new', {'id' : 'id' }) }}';
+            url  = url .replace("id", id);
+            console.log(url);
+
+            $.ajax({
+                
+                url: url,
+			        	method: "POST",
+                data: {city:city, date:date},
+                success:function(data)
+                {
+                    console.log(data);
+                },
+                error: function(error){
+                  console.log("Something went wrong", error);
+                }
+            });
+
+            
+        });
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hoverEffect {
+    font-size: 29px;
+    position: absolute;
+    margin: 30px 55px;
+    cursor: pointer;
+}
+</style>
+</head>
+{% block body %}
+
+  <div id='calendar'></div>
+   <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Creat Event</h4>
+        </div>
+
+        <div class="modal-body">
+          {{ form_start(form) }}
+              {{ form_row(form.date, { 'value': '2020-03-12 00:00:00' }) }} 
+              {{ form_row(form.city) }}
+              {{ form_row(form.sport) }} 
+              <button type="button" id="event_save" class="save">Save</button> 
+          {{ form_end(form) }}
+        </div>
+   
+      </div>
+      
+    </div>
+  </div>
+
+  
+
+{% endblock %}
+</html>

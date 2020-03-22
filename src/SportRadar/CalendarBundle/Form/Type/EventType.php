@@ -5,13 +5,33 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
+
 
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date');
-        $builder->add('city');
+        
+        $builder
+        ->add('date',TextType::class, array(
+                'attr'=>array(
+                    'class'=>'form-control',
+                )
+            )
+        )
+        ->add('city',TextType::class, array(
+                'attr'=>array(
+                    'class'=>'form-control',
+                )
+            )
+        )
+        ->add('sport')
+        ;
+    
        
     }
 

@@ -52,7 +52,7 @@ class Event
      *
      * @param string $title
      *
-     * @return Event
+     * @return String
      */
     public function setDate($date)
     {

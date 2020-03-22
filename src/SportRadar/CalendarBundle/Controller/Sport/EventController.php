@@ -41,8 +41,10 @@ class EventController extends Controller
      * @Rest\View()
      * @Rest\Post("/sport/{id}/events", name="event_new")
      */
+    
     public function postEventAction(Request $request)
     {
+        
         $sport = $this->get('doctrine.orm.entity_manager')
         ->getRepository('SportRadarCalendarBundle:Sport')
         ->find($request->get('id'));
@@ -51,14 +53,22 @@ class EventController extends Controller
             return $this->sportNotFound();
         }
         $event = new Event();
+        
         $form = $this->createForm(EventType::class, $event);
         
         
         $form->submit($request->request->all());
         
+        $event->setSport($sport);
+       
+        
+        $date = $event->getDate();
+
+        $event->setDate($this->get('sport_radar_calendar.date')->dateToString($date));
+
         if ($form->isValid()) {
             $event->setSport($sport);
-           
+            
             $em = $this->get('doctrine.orm.entity_manager');
             
             $em->persist($event);
@@ -73,7 +83,7 @@ class EventController extends Controller
      /**
      * 
      * @Rest\View(serializerGroups={"event"})
-     * @Rest\Get("/sport/{id}/events", name="event_new")
+     * @Rest\Get("/sport/{id}/events", name="event")
      */
     public function getEventAction(Request $request)
     {
