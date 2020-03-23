@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use SportRadar\CalendarBundle\Entity\Sport;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use SportRadar\CalendarBundle\Form\Type\SportType;
+use SportRadar\CalendarBundle\Service\SportManager;
 
 use FOS\RestBundle\View\View; 
 
@@ -21,11 +22,6 @@ use FOS\RestBundle\View\View;
 class SportController extends Controller
 {
     
-
-    public function __construct()
-    {
-        
-    }
     /**
      * 
      * @Rest\View(serializerGroups={"sport"})
@@ -33,7 +29,7 @@ class SportController extends Controller
      */
     public function getSportsAction(Request $request)
     {
-        return $this->get('sport_radar_calendar.sport_manager')->getAllSports();  
+        return $this->sportManager()->getAllSports();  
     }
     /**
      * 
@@ -43,8 +39,13 @@ class SportController extends Controller
     public function postSportAction(Request $request)
     {
 
-        return $this->get('sport_radar_calendar.sport_manager')->saveSport($request);
+        return $this->sportManager()->saveSport($request);
         
+    }
+
+    public function sportManager()
+    {
+        return $this->get('sport_radar_calendar.sport_manager');
     }
 
     
