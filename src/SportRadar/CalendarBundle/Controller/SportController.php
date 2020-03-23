@@ -37,7 +37,7 @@ class SportController extends Controller
     }
     /**
      * 
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"sport"})
      * @Rest\Post("/new", name="sport_new")
      */
     public function postSportAction(Request $request)
