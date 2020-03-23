@@ -68,9 +68,9 @@ class EventManager
     {
        
 
-        $sports = $this->em
-                ->getRepository('SportRadarCalendarBundle:Sport')
+        $events = $this->em
+                ->getRepository('SportRadarCalendarBundle:Event')
                 ->findAll();
-        return $sports;
+        return $events;
     }
 }

@@ -22,6 +22,10 @@ class SportController extends Controller
 {
     
 
+    public function __construct()
+    {
+        
+    }
     /**
      * 
      * @Rest\View(serializerGroups={"sport"})
@@ -29,8 +33,7 @@ class SportController extends Controller
      */
     public function getSportsAction(Request $request)
     {
-        return $this->get('sport_radar_calendar.sport_manager')->getAllSports();
-       
+        return $this->get('sport_radar_calendar.sport_manager')->getAllSports();  
     }
     /**
      * 

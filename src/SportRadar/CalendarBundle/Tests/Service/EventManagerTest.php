@@ -3,10 +3,10 @@
 namespace SportRadar\CalendarBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use SportRadar\CalendarBundle\Service\SportManager;
+use SportRadar\CalendarBundle\Service\EventManager;
+use Symfony\Component\HttpFoundation\Request;
 
-
-class SportManagerTest extends KernelTestCase
+class EventManagerTest extends KernelTestCase
 {
 
     private $container;
@@ -21,19 +21,20 @@ class SportManagerTest extends KernelTestCase
         $this->container = static::$kernel->getContainer();
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->form = $this->container->get('form.factory');
+        $this->date = $this->container->get('sport_radar_calendar.date');;
+        $this->request = new Request();
     }
 
-    public function testGetAllSports()
+    public function testGetAllEvents()
     {
-        $service = new SportManager($this->em,$this->form);
-        $this->assertNotEmpty($service->getAllSports());
+        $service = new EventManager($this->em,$this->form,$this->date);
+        $this->assertNotEmpty($service->getAllEvents());
     }
 
-   
     protected function tearDown()
     {
         $this->em->close();
-        unset($this->em,$this->form);
+        unset($this->em,$this->form,$this->date);
     }
 
 }

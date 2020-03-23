@@ -11,7 +11,7 @@
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
         </service-->
-        <service id="sport_radar_calendar.date" class="SportRadar\CalendarBundle\Service\Date">        
+        <service id="sport_radar_calendar.date" public="true" class="SportRadar\CalendarBundle\Service\Date">        
         </service>
 
         <service id="sport_radar_calendar.sport_manager" class="SportRadar\CalendarBundle\Service\SportManager">
