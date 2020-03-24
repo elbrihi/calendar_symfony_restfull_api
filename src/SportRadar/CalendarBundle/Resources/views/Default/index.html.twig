@@ -15,9 +15,10 @@ bootstrap.min.css'>
 
   $(document).ready(function() {
 
-     events();
-    
-      var id = 5;
+    events();
+    let k = events();
+    console.log(k);
+    var id = 5;
     //console.log(id);
    
     //console.log(url);
@@ -95,7 +96,11 @@ bootstrap.min.css'>
             data: {title:title},
             success:function(data)
               {
+                  console.log(title);
+                  let html = ' <div class="alert alert-success" role="alert">'+ title +' is added</div>';
                   
+                  $('#success').append(html);
+
               },
               error: function(error){
                 console.log("Something went wrong", error);
@@ -126,7 +131,7 @@ bootstrap.min.css'>
             }
          
           });
-        }
+      }
    
       
   });
@@ -171,13 +176,19 @@ bootstrap.min.css'>
     <br />
     </div> 
     <div class="row">
+      <div class="col-md-8">
+        <div id="success">
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div id='calendar'></div>
       </div>
       <div class="col-md-4">
         <div class="card">
           <div class="card-header">
-            Featured
+            
           </div>
           <ul class="list-group list-group-flush">
             <div id="event_calandar"></div>

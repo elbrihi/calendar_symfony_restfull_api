@@ -5,6 +5,7 @@ namespace SportRadar\CalendarBundle\Service;
 use SportRadar\CalendarBundle\Entity\Sport;
 use Symfony\Component\Form\FormFactory ;
 use SportRadar\CalendarBundle\Form\Type\SportType;
+use Symfony\Component\HttpFoundation\Response;
 
 class SportManager
 {
@@ -49,4 +50,5 @@ class SportManager
                 ->findAll();
         return $sports;
     }
+    
 }

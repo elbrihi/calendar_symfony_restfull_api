@@ -25,6 +25,10 @@
             <argument type="service" id="form.factory"/>
             <argument type="service" id="sport_radar_calendar.date"/>
         </service>
+
+        <service id="sport_radar_calendar.sport_controller" public="true" class="SportRadar\CalendarBundle\Controller\SportController"> 
+            <argument type="service" id="sport_radar_calendar.sport_manager"/>
+        </service>
     </services>
     
 </container>

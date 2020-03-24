@@ -19,8 +19,10 @@ use FOS\RestBundle\View\View;
  *
  * @Route("sport")
  */
-class SportController extends Controller
+final class SportController extends Controller
 {
+    
+
     
     /**
      * 
@@ -29,7 +31,7 @@ class SportController extends Controller
      */
     public function getSportsAction(Request $request)
     {
-        return $this->sportManager()->getAllSports();  
+        return  $this->sportManager()->getAllSports();  
     }
     /**
      * 
